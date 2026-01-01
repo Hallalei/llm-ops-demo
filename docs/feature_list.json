@@ -1,0 +1,282 @@
+{
+  "project": "deye-llm-ops",
+  "description": "AI 对话记录预览系统",
+  "features": [
+    {
+      "id": "F001",
+      "name": "项目初始化",
+      "description": "基于 tablecn 模板初始化项目，配置数据库连接",
+      "priority": 1,
+      "passes": true
+    },
+    {
+      "id": "F002",
+      "name": "对话列表展示",
+      "description": "展示灵思实时数据表的对话记录，支持分页排序",
+      "priority": 1,
+      "passes": true
+    },
+    {
+      "id": "F003",
+      "name": "基础筛选功能",
+      "description": "支持按提问内容、环境、标签、用户ID筛选",
+      "priority": 1,
+      "passes": true
+    },
+    {
+      "id": "F004",
+      "name": "高级筛选器",
+      "description": "Notion/Airtable 风格的高级筛选功能",
+      "priority": 2,
+      "passes": true
+    },
+    {
+      "id": "F005",
+      "name": "详情查看弹窗",
+      "description": "点击查看完整对话内容、元数据、评分",
+      "priority": 2,
+      "passes": true
+    },
+    {
+      "id": "F006",
+      "name": "数据导出",
+      "description": "支持选中数据导出为 CSV",
+      "priority": 2,
+      "passes": true
+    },
+    {
+      "id": "F007",
+      "name": "中文界面本地化",
+      "description": "界面文案中文化",
+      "priority": 2,
+      "passes": true
+    },
+    {
+      "id": "F008",
+      "name": "数据统计看板",
+      "description": "仪表盘页面，展示对话数量、环境分布等统计指标和趋势图表",
+      "priority": 3,
+      "passes": true,
+      "criteria": [
+        "独立页面 /dashboard，导航栏有入口",
+        "4个核心指标卡片：总对话数、今日新增、活跃用户、活跃会话",
+        "环境分布统计（prod/dev占比）",
+        "翻译进度显示",
+        "每日对话趋势面积图（默认7天，支持自定义时间范围）",
+        "深色模式适配",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F009",
+      "name": "会话追踪",
+      "description": "通过 session_id 查看完整会话上下文",
+      "priority": 3,
+      "passes": true
+    },
+    {
+      "id": "F010",
+      "name": "响应质量分析",
+      "description": "基于 scores 字段的响应质量可视化",
+      "priority": 3,
+      "passes": true,
+      "criteria": [
+        "AI 回复气泡下方显示进度条形式的评分",
+        "无评分数据时不显示进度条区域",
+        "评分值范围 0-1，正确转换为百分比展示",
+        "4个评分指标：precision、relevance、lang match、fidelity",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F011",
+      "name": "Trace 意图分类",
+      "description": "使用 DeepSeek 大模型对用户问题进行意图分类",
+      "priority": 3,
+      "passes": true,
+      "criteria": [
+        "新建 conversation_classifications 表存储分类结果",
+        "使用 DeepSeek Function Calling + enum 约束实现结构化输出",
+        "Settings 页面支持类别增删改和 Prompt 配置",
+        "表格新增意图分类列，支持多选筛选",
+        "支持定时自动分类（ENABLE_AUTO_CLASSIFY 环境变量控制）",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F012",
+      "name": "侧边栏导航改造",
+      "description": "将原有顶部标签菜单改为侧边栏实现，使用 shadcn/ui 官方 Sidebar 组件",
+      "priority": 3,
+      "passes": true,
+      "criteria": [
+        "侧边栏包含所有原有导航项：Data Grid、会话、仪表盘、设置",
+        "侧边栏支持折叠/展开（点击 Rail 或 SidebarTrigger 按钮）",
+        "侧边栏状态通过 Cookie 持久化（刷新页面后状态保持）",
+        "当前激活的菜单项有高亮显示",
+        "暗色模式正常工作",
+        "移动端响应式正常（窗口宽度 < 768px）",
+        "页面内容区域宽度自适应"
+      ]
+    },
+    {
+      "id": "F013",
+      "name": "登录注册功能",
+      "description": "使用 NextAuth.js 实现用户登录注册，支持邮箱密码和 OAuth 登录，区分管理员和普通用户角色",
+      "priority": 1,
+      "passes": true,
+      "criteria": [
+        "访问任意页面未登录时自动跳转到 /login",
+        "注册页面 /register 使用 shadcn signup-04 组件",
+        "支持邮箱+密码注册和登录",
+        "OAuth 按钮存在（Google/Apple）",
+        "Session 中包含 role 字段（admin/user）",
+        "管理员账号可正常登录",
+        "登录成功后跳转首页",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-001",
+      "name": "Playground 基础聊天",
+      "description": "AI 对话 Playground，支持多模型切换和流式响应",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "用户可以访问 /playground 页面",
+        "用户可以在输入框输入消息并发送",
+        "用户可以看到流式响应 (需要配置 VAPI_API_KEY)",
+        "用户可以切换不同模型 (9 个模型，4 个提供商)",
+        "侧边栏显示 Playground 导航项",
+        "Enter 发送消息，Shift+Enter 换行",
+        "响应中可以点击停止按钮",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-010",
+      "name": "Playground 图片上传",
+      "description": "支持在 Playground 中上传图片附件",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "图片上传按钮 (ImagePlus 图标) 可点击",
+        "支持选择多张图片",
+        "仅允许 image/* 类型文件",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-011",
+      "name": "Playground 图片预览",
+      "description": "图片预览在发送前显示在输入框上方",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "上传后图片缩略图显示在输入框上方",
+        "显示文件名标签",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-012",
+      "name": "Playground 图片删除",
+      "description": "支持删除待发送的图片附件",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "hover 图片时显示红色 X 删除按钮",
+        "点击 X 按钮可移除图片",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-013",
+      "name": "Playground 工具调用",
+      "description": "支持 AI 工具调用功能",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "定义 getCurrentTime 工具 (获取当前时间)",
+        "定义 calculate 工具 (数学计算)",
+        "定义 getWeather 工具 (模拟天气)",
+        "工具调用结果在消息中显示",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-014",
+      "name": "Playground 工具结果显示",
+      "description": "工具调用结果在聊天界面中可视化显示",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "显示工具名称和图标",
+        "显示调用参数",
+        "显示执行结果",
+        "支持 pending/result/error 状态",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-015",
+      "name": "Playground 代码块组件",
+      "description": "代码块组件支持语法高亮和复制功能",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "CodeBlock 组件存在",
+        "支持语法高亮 (使用 react-syntax-highlighter)",
+        "有复制按钮 (Copy 图标)",
+        "复制后显示 Check 图标反馈",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-016",
+      "name": "Playground Artifact 面板",
+      "description": "Artifact 面板支持代码、图表、文档类型",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "ArtifactPanel 组件存在",
+        "支持 code 类型 (渲染代码块)",
+        "支持 chart 类型 (渲染图表)",
+        "支持 document 类型 (渲染文本)",
+        "Tab 切换多个 artifact",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-017",
+      "name": "Playground 分享对话框",
+      "description": "分享对话框支持可见性选择",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "ShareDialog 组件存在",
+        "支持 public 可见性",
+        "支持 unlisted 可见性",
+        "支持 private 可见性",
+        "生成分享链接并显示",
+        "支持复制链接",
+        "pnpm build 通过"
+      ]
+    },
+    {
+      "id": "F-PG-018",
+      "name": "Playground 公开分享页面",
+      "description": "公开分享页面允许查看共享对话",
+      "priority": 2,
+      "passes": true,
+      "criteria": [
+        "分享 API 存在 (/api/playground/chats/[chatId]/share)",
+        "公开分享页面存在 (/playground/share/[shareToken])",
+        "显示对话标题和模型",
+        "显示对话消息列表",
+        "private 对话返回 404",
+        "pnpm build 通过"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1764642994046,
+      "tag": "0000_little_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1766454146346,
+      "tag": "0001_add_classifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766454146347,
+      "tag": "0002_add_translations_index",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1766454146348,
+      "tag": "0003_add_language_detections",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1766454146349,
+      "tag": "0004_add_end_users",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1766469914892,
+      "tag": "0005_smart_shriek",
+      "breakpoints": true
+    }
+  ]
+}
